@@ -211,3 +211,4 @@ if __name__ == "__main__":
     plt.imshow(np.array(label))
     plt.subplot(122)
     plt.imshow(np.array(img)[0,:,:],cmap='gray')
+    plt.show()

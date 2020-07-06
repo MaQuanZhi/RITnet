@@ -22,6 +22,11 @@ if __name__ == '__main__':
     
     args = parse_args()
    
+    args.model = "densenet"
+    # args.bs = "4"
+    args.load = "best_model.pkl"
+
+
     if args.model not in model_dict:
         print ("Model not found !!!")
         print ("valid models are:",list(model_dict.keys()))
@@ -32,6 +37,7 @@ if __name__ == '__main__':
     else:
         device=torch.device("cpu")
         
+    # device=torch.device("cpu") # cudnn报错，用cpu跑
     model = model_dict[args.model]
     model  = model.to(device)
     filename = args.load
@@ -47,7 +53,8 @@ if __name__ == '__main__':
                                  split = 'test',transform = transform)
     
     testloader = DataLoader(test_set, batch_size = args.bs,
-                             shuffle=False, num_workers=2)
+                             shuffle=False, num_workers=0)
+                             # windows下num_workers改成0，源代码为2
     counter=0
     
     os.makedirs('test/labels/',exist_ok=True)
